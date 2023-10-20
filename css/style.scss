@@ -1,0 +1,218 @@
+@import 'imports/_normalize.scss';
+@import 'imports/_boilerplate.scss';
+@import 'imports/_mixins.scss';
+
+* {
+	font-family: Roboto, sans-serif;
+}
+
+h1 {
+	margin-block: 0 20px;
+	@include fontSize(32,90,480,980);
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #fff;
+	letter-spacing: .1em;
+	.small {
+		display: block;
+		margin-bottom: clampIt(20px,48px);
+		@include fontSize(12,18,480,1920);
+		font-weight: 300;
+		letter-spacing: 0.2em;
+	}
+}
+
+p {
+	margin: 0;
+	font-weight: 300;
+	line-height: 1.3125;
+	letter-spacing: 0.05em;
+	color: #7E7FA2;
+	& + p {
+		margin-top: 30px;
+	}
+}
+
+.btn {
+	display: inline-block;
+	position: relative;
+	@include fontSize(16,9,480,1920);
+	font-weight: 700;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #000;
+	letter-spacing: .1em;
+
+	span {
+		display: block;
+		position: relative;
+		z-index: 1;
+		background-color: #fff;
+		padding:clampIt(7px,12px) clampIt(16px,30px) clampIt(9px,15px);
+	}
+
+	span, 
+	&::after {
+		border-radius: 50px;
+	}
+
+	&::after {
+		content:'';
+		position: absolute;
+		z-index: 0;
+		left: 0;
+		top: 0;
+		right: calc(clampIt(3px,6px) * -1);
+		bottom: calc(clampIt(3px,6px) * -1);
+		transition: right .2s ease, left .2s ease, top .2s ease, bottom .2s ease;
+		background: linear-gradient(
+			100deg, 
+			#FF00EB, 
+			#00FFE2
+		)
+	}
+
+	&:hover,
+	&:focus {
+		&::after {
+			left: -6px;
+			top: -6px;
+			right: 0;
+			bottom: 0;
+		}
+	}
+}
+
+
+main {
+	@include mq(700) {
+		padding: clampIt(0px,40px) clampIt(0px,38px);
+	}
+}
+
+.hero {
+	position: relative;
+	max-width: 1840px;
+	padding-inline: clampIt(30px,40px);
+	margin: 0 auto;
+	background-color: #000;
+	box-shadow: 0 0 60px rgba(#5764FF, .56);
+	@include mq(700) {
+		border-radius: 40px;
+		overflow: hidden;
+	}
+
+	.inner {
+		position: relative;
+		z-index: 1;
+		width: min(90%, 700px);
+		padding: clampIt(140px,160px) 0 clampIt(30px,40px);
+
+		.copy {
+			max-width: clampIt(470px,700px);
+		}
+
+		@include mq(699,max) {
+			.copy {
+				p:nth-child(1) {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.bg {
+		position: absolute;
+		z-index: 0;
+		inset: 0;
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: right top;
+
+			@include mq(980) {
+				object-position: center;
+			}
+		}
+	}
+
+	.mouse {
+		position: absolute;
+		z-index: 2;
+		right: 38px;
+		bottom: 32px;
+
+		svg {
+			#circle {
+				opacity: 1;
+				fill: white !important;
+				transform: translate(15px, 15.5px);
+				animation: circleAnim 3s ease 0s infinite ;
+			}
+			#path {
+				transform-origin: center top;
+				transform: translate(15px, 15.5px) scaleY(0);
+				animation: pathAnim 3s ease 0s infinite ;
+			}
+		}
+
+		@include mq(979,max) {
+			display: none;
+		}
+	}
+}
+
+
+
+@keyframes circleAnim {
+	0% {
+		opacity: 0;
+	}
+	5% {
+		opacity: 1;
+		transform: translate(15px, 15.5px);
+	}
+	15% {
+		opacity: 1;
+		transform: translate(15px, 15.5px);
+	}
+	60% {
+		opacity: 1;
+		transform: translate(15px, 45.5px);
+	}
+	80% {
+		opacity: 1;
+	}
+	95% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+		transform: translate(15px, 45.5px);
+	}
+}
+@keyframes pathAnim {
+	0% {
+		
+	}
+	14.9% {
+		transform: translate(15px, 15.5px) scaleY(0);
+	}
+	15% {
+		transform: translate(15px, 15.5px) scaleY(.1);
+	}
+	60% {
+		transform: translate(15px, 15.5px) scaleY(1);
+	}
+	80% {
+		opacity: 1;
+	}
+	95% {
+		opacity: 0;
+	}
+	100% {
+		transform: translate(15px, 15.5px) scaleY(1);
+		opacity: 0;
+	}
+}

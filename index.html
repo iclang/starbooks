@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Starbooks</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<main>
+		<div class="hero">
+			<div class="inner">
+				<h1>
+					<span class="small">Explore Worlds</span>
+					Starbooks
+				</h1>
+
+				<div class="copy">
+					<p>
+						Starbooks is your cosmic gateway to a limitless library, harnessing cutting-edge technology to instantly locate and access the universe of books. Embark on literary adventures that transcend time and space, as we make the search for knowledge a journey truly out of this world.
+					</p>
+
+					<p class="button">
+						<a href="#" class="btn">
+							<span>See What’s New</span>
+						</a>
+					</p>
+				</div>
+			</div>
+
+			<picture class="bg">
+				<!-- 
+					NOTE: With more time, I would either manually or server-side output multiple sizes and breakpoints of the image, along with images using the webp format.
+				-->
+				<source srcset="img/header-bg.jpg" media="(min-width:61.25em)">
+				<img src="img/header-bg-mobile.jpg" alt="" width="1840" height="600" aria-hidden="true" fetchpriority="high">
+			</picture>
+
+			<div class="mouse">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="71" viewBox="0 0 40 71">
+					<defs>
+						<linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+						<stop offset="0" stop-color="#fff" stop-opacity="0"/>
+						<stop offset="1" stop-color="#fff"/>
+						</linearGradient>
+
+						<mask id="pathMask">
+							<rect width="10" height="40" rx="5" fill="#fff" transform-origin="50 0" />
+						</mask>
+					</defs>
+					<g id="mouse">
+						<rect id="path" width="10" height="40" rx="5" fill="url(#linear-gradient)" transform="translate(15 15.5) scale(1)" transform-origin="50 0" mask="url(#pathMask)" />
+						
+						<g id="outline" fill="none" stroke="#fff" stroke-width="3">
+							<rect x="1.5" y="1.5" width="37" height="67" rx="18.5" fill="none"/>
+						</g>
+
+						<rect id="circle" width="10" height="10" rx="5" fill="#fff" transform="translate(15 15.5)" />
+					</g>
+					</svg>
+
+			</div>
+		</div>
+	</main>
+	
+</body>
+</html>

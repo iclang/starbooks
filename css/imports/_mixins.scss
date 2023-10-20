@@ -1,0 +1,90 @@
+@use 'sass:math';
+
+/* Media Queries */
+	$doc-font-size: 16;
+	@mixin mq($point, $query1: min, $query2: width) { // http://alwaystwisted.com/post.php?s=2013-04-01-my-media-query-mixin
+		@media screen and (#{$query1}-#{$query2}:$point / $doc-font-size +em) {
+		//@media screen and (#{$query1}-#{$query2}:$point +px) {
+			@content;
+		}
+	}
+	@mixin mqSpan($point1, $point2) {
+		@media screen and (min-width:$point1 / $doc-font-size +em) and (max-width:$point2 / $doc-font-size +em) {
+		//@media screen and (#{$query1}-#{$query2}:$point +px) {
+			@content;
+		}
+	}
+	@mixin mqHDPI {
+		@media print,
+		(-o-min-device-pixel-ratio: 5/4),
+		(-webkit-min-device-pixel-ratio: 1.25),
+		(min-resolution: 120dpi) {
+			@content;
+		}
+	}
+
+
+
+
+/* 
+	Min-Max-Value Interpolation for Font Sizing
+	by: Chris Lang - https://github.com/iclang/min-max-calc-scss
+
+	Based on https://min-max-calculator.9elements.com/
+	         https://github.com/9elements/min-max-calculator
+
+	Input:
+	  1. Minimum font size in px
+	  2. Maximum font size in px
+	  3. Minimum viewport size in px
+	  4. Maximum viewport size in px
+	Notes:
+	  1. All values in pixels
+	  2. Min values must be lesser than max values
+  Example: 
+    p {
+      @include fontSize(16, 32, 375, 1400);
+    }
+    Outputs: font-size: clamp(1rem, 0.7037037037rem + 1.4814814815vw, 2rem);
+    Font size will scale from 32px at 1400px viewport, down to 16px at 375px
+ */
+ 
+  @mixin fontSize($minValuePx, $maxValuePx, $minViewportPx, $maxViewportPx, $important:null) {
+    $minValueREM: math.div($minValuePx, 16);
+    $maxValueREM: math.div($maxValuePx, 16);
+    $variablePart: math.div(($maxValuePx - $minValuePx), ($maxViewportPx - $minViewportPx));
+    $constant: math.div(($maxValuePx - $maxViewportPx * $variablePart), 16);
+
+    font-size:clamp(#{$minValueREM}rem, #{$constant}rem + #{100 * $variablePart}vw, #{$maxValueREM}rem) #{$important};
+  }
+
+
+
+/*   
+  Clamp Function
+  by: Chris Lang
+
+  Usage: clampIt(10px, 100px)
+         min Px, max Px -- using 1920 as max screen size (i.e. at 1920px viewport it will be 100px and go down from there)
+  Usage: clampIt(10px, 100px, 1200px) min, max, maxScreenSize
+         min Px, max Px -- using 1200 as max screen size (i.e. at 1200px viewport it will be 100px and go down from there)
+  */
+  @function strip-unit($value) {
+    @return math.div($value, ($value * 0 + 1));
+  }
+  @function clampIt($min, $max, $maxScreensize:1920px) {
+    @return clamp(#{$min}, #{(math.div(strip-unit($max), strip-unit($maxScreensize)) * 100) + vw}, #{$max});
+  }
+
+  @function clampIt2($minValuePx, $maxValuePx, $minViewportPx, $maxViewportPx) {
+    $minValuePx: strip-unit($minValuePx);
+    $maxValuePx: strip-unit($maxValuePx);
+    $minViewportPx: strip-unit($minViewportPx);
+    $maxViewportPx: strip-unit($maxViewportPx);
+    $minValueREM: math.div($minValuePx, 16);
+    $maxValueREM: math.div($maxValuePx, 16);
+    $variablePart: math.div(($maxValuePx - $minValuePx), ($maxViewportPx - $minViewportPx));
+    $constant: math.div(($maxValuePx - $maxViewportPx * $variablePart), 16);
+
+    @return clamp(#{$minValueREM}rem, #{$constant}rem + #{100 * $variablePart}vw, #{$maxValueREM}rem);
+  }
